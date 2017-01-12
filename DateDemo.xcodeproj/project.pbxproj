@@ -13,6 +13,7 @@
 		4484320E1E2758A00068BCB8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4484320C1E2758A00068BCB8 /* Main.storyboard */; };
 		448432101E2758A00068BCB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4484320F1E2758A00068BCB8 /* Assets.xcassets */; };
 		448432131E2758A00068BCB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 448432111E2758A00068BCB8 /* LaunchScreen.storyboard */; };
+		4484321C1E275A3C0068BCB8 /* LSDateTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4484321B1E275A3C0068BCB8 /* LSDateTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		4484320F1E2758A00068BCB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		448432121E2758A00068BCB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		448432141E2758A00068BCB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4484321A1E275A3C0068BCB8 /* LSDateTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSDateTool.h; sourceTree = "<group>"; };
+		4484321B1E275A3C0068BCB8 /* LSDateTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSDateTool.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 				448432071E2758A00068BCB8 /* AppDelegate.m */,
 				448432091E2758A00068BCB8 /* ViewController.h */,
 				4484320A1E2758A00068BCB8 /* ViewController.m */,
+				4484321A1E275A3C0068BCB8 /* LSDateTool.h */,
+				4484321B1E275A3C0068BCB8 /* LSDateTool.m */,
 				4484320C1E2758A00068BCB8 /* Main.storyboard */,
 				4484320F1E2758A00068BCB8 /* Assets.xcassets */,
 				448432111E2758A00068BCB8 /* LaunchScreen.storyboard */,
@@ -153,6 +158,7 @@
 			files = (
 				4484320B1E2758A00068BCB8 /* ViewController.m in Sources */,
 				448432081E2758A00068BCB8 /* AppDelegate.m in Sources */,
+				4484321C1E275A3C0068BCB8 /* LSDateTool.m in Sources */,
 				448432051E2758A00068BCB8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
