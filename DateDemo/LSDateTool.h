@@ -81,4 +81,52 @@
  */
 + (NSString *)getLocalDateFormaterWithGMTDate:(NSString *)GMTDate;
 
+
+/**
+ 时间戳转时间
+
+ @param timeStamp 时间戳
+ @return 时间字符串
+ */
++(NSString *)timeStampTransToTime:(NSString *)timeStamp;
+
+
+/**
+ 时间转时间戳
+
+ @param time 时间
+ @return 时间戳
+ */
++(NSString *)timeTransTotimeStamp:(NSString *)time;
+
+/**
+ 判断date是否是今天
+ 
+ @param date 需要判断的日期
+ @return 是/不是今天
+ */
++ (BOOL)isTodayWithDate:(NSDate *)date;
+
+/**
+ 判断date是否是昨天
+ 
+ @param date 需要判断的日期
+ @return 是/不是昨天
+ */
++ (BOOL)isYestodayWithDate:(NSDate *)date;
+
+/**
+ 判断date是否是明天
+ 
+ @param date 需要判断的日期
+ @return 是/不是明天
+ */
++ (BOOL)isTomorrowWithDate:(NSDate *)date;
+/**
+ 判断date是否是今年
+ 
+ @param date 需要判断的日期
+ @return 是/不是今年
+ */
++ (BOOL)isThisYearWithDate:(NSDate *)date;
 @end

@@ -163,4 +163,124 @@
     NSString *localeTimeStr =[dateFormatter stringFromDate:localeDate];
     return localeTimeStr;
 }
+
+/**
+ 时间戳转时间
+ 
+ @param timeStamp 时间戳
+ @return 时间字符串
+ */
++ (NSString *)timeStampTransToTime:(NSString *)timeStamp
+{
+    NSTimeInterval time=[timeStamp doubleValue];//如果不使用本地时区,因为时差问题要加8小时 == 28800 sec
+    NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];//设置本地时区
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"yy-MM-dd HH-mm-ss"];
+    
+    NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
+    
+    return currentDateStr;
+}
+
+/**
+ 时间转时间戳
+ 
+ @param time 时间
+ @return 时间戳
+ */
++(NSString *)timeTransTotimeStamp:(NSString *)time
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]]; //设置本地时区
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
+    NSDate *date = [dateFormatter dateFromString:time];
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[date timeIntervalSince1970]];//时间戳
+    return timeSp;
+}
+
+
+/**
+ 判断date是否是今天
+
+ @param date 需要判断的日期
+ @return 是/不是今天
+ */
++ (BOOL)isTodayWithDate:(NSDate *)date{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+    // 获取时间
+    NSDateComponents *selfCmps = [calendar components:unit fromDate:date];
+    NSDateComponents *nowCmps = [calendar components:unit fromDate:[NSDate date]];
+    
+    return selfCmps.year == nowCmps.year && selfCmps.month == nowCmps.month && selfCmps.day == nowCmps.day;
+}
+
+/**
+ 判断date是否是昨天
+ 
+ @param date 需要判断的日期
+ @return 是/不是昨天
+ */
++ (BOOL)isYestodayWithDate:(NSDate *)date{
+    // 生成只有年月日的日期对象
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    fmt.dateFormat = @"yyyy-MM-dd";
+    
+    NSString *selfString = [fmt stringFromDate:date];
+    NSDate *selfDate = [fmt dateFromString:selfString];
+    
+    NSString *nowString = [fmt stringFromDate:[NSDate date]];
+    NSDate *nowDate = [fmt dateFromString:nowString];
+    
+    // 比较时间差
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+    NSDateComponents *cmps = [calendar components:unit fromDate:selfDate toDate:nowDate options:0];
+    
+    return cmps.year == 0 && cmps.month == 0 && cmps.day == 1;
+}
+
+/**
+ 判断date是否是明天
+ 
+ @param date 需要判断的日期
+ @return 是/不是明天
+ */
++ (BOOL)isTomorrowWithDate:(NSDate *)date{
+    // 生成只有年月日的日期对象
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    fmt.dateFormat = @"yyyy-MM-dd";
+    
+    NSString *selfString = [fmt stringFromDate:date];
+    NSDate *selfDate = [fmt dateFromString:selfString];
+    
+    NSString *nowString = [fmt stringFromDate:[NSDate date]];
+    NSDate *nowDate = [fmt dateFromString:nowString];
+    
+    // 比较时间差
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+    NSDateComponents *cmps = [calendar components:unit fromDate:selfDate toDate:nowDate options:0];
+    
+    return cmps.year == 0 && cmps.month == 0 && cmps.day == -1;
+}
+
+/**
+ 判断date是否是今年
+ 
+ @param date 需要判断的日期
+ @return 是/不是今年
+ */
++ (BOOL)isThisYearWithDate:(NSDate *)date{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSInteger selfYear = [calendar component:NSCalendarUnitYear fromDate:date];
+    NSInteger nowYear = [calendar component:NSCalendarUnitYear fromDate:[NSDate date]];
+    
+    return selfYear == nowYear;
+}
 @end
