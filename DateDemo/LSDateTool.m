@@ -283,4 +283,65 @@
     
     return selfYear == nowYear;
 }
+
+/**
+ 比较两个日期之间相差几天
+
+ @param startDate <#startDate description#>
+ @param endDate <#endDate description#>
+ @return <#return value description#>
+ */
++ (NSInteger)differOfBothDateWithStartDate:(NSString *)startDate endDate:(NSString *)endDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date1 = [dateFormatter dateFromString:startDate];
+    NSDate *date2 = [dateFormatter dateFromString:endDate];
+    NSDateComponents *components;
+    NSInteger numberOfDays;
+    components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:date1 toDate:date2 options:0];
+    numberOfDays = [components day];
+    return numberOfDays;
+}
+
+
+/**
+ 比较两个时间之间相差多少分钟
+
+ @param startTime <#startTime description#>
+ @param endTime <#endTime description#>
+ @return <#return value description#>
+ */
++ (NSInteger)differOfBothTimeWithStartTime:(NSString *)startTime endTime:(NSString *)endTime
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm"];
+    NSDate *time1 = [dateFormatter dateFromString:startTime];
+    NSDate *time2 = [dateFormatter dateFromString:endTime];
+    NSDateComponents *components;
+    NSInteger numberOfMinutes;
+    components = [[NSCalendar currentCalendar] components: NSCalendarUnitMinute fromDate:time1 toDate:time2 options:0];
+    numberOfMinutes = [components minute];
+    return numberOfMinutes;
+}
+
+
+
+/**
+ 计算多少天之后的日期
+
+ @param startDate 需要换算的日期
+ @param day 天数
+ @return 换算之后的日期
+ */
++ (NSString *)getDateAfterSomeDaysWithDate:(NSDate *)startDate days:(NSString *)day
+{
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    [dateComponents setDay:[day integerValue]];
+    NSDate *thirtyDaysLatter = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:startDate options:0];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-M-d HH-mm-ss"];
+    NSString *getDate = [dateFormatter stringFromDate:thirtyDaysLatter];
+    return getDate;
+}
 @end

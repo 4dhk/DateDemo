@@ -129,4 +129,31 @@
  @return 是/不是今年
  */
 + (BOOL)isThisYearWithDate:(NSDate *)date;
+
+/**
+ 比较两个日期之间相差几天
+ 
+ @param startDate <#startDate description#>
+ @param endDate <#endDate description#>
+ @return <#return value description#>
+ */
++ (NSInteger)differOfBothDateWithStartDate:(NSString *)startDate endDate:(NSString *)endDate;
+
+/**
+ 比较两个时间之间相差多少分钟
+ 
+ @param startTime <#startTime description#>
+ @param endTime <#endTime description#>
+ @return <#return value description#>
+ */
++ (NSInteger)differOfBothTimeWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
+
+/**
+ 计算多少天之后的日期
+ 
+ @param startDate 需要换算的日期
+ @param day 天数
+ @return 换算之后的日期
+ */
++ (NSString *)getDateAfterSomeDaysWithDate:(NSDate *)startDate days:(NSString *)day;
 @end
