@@ -13,11 +13,11 @@
  获取当前的日期
  日期格式为:yyyy-MM-dd HH-mm-ss，可自定义
  */
-+ (NSString *)getCurrentDate
++ (NSString *)getCurrentDateWithFormatter:(NSString *)dateFormatter
 {
     // 设置 日期的格式
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
+    [formatter setDateFormat:dateFormatter];
     
     // 获取 当前系统时间
     NSString *dataTime = [formatter stringFromDate:[NSDate date]];
@@ -30,10 +30,10 @@
  @param dateString 日期字符串
  @return 转换后的date
  */
-+ (NSDate *)stringToDateWithString:(NSString *)dateString
++ (NSDate *)stringToDateWithString:(NSString *)dateString formatter:(NSString *)dateFormatter
 {
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    format.dateFormat = @"yyyy-MM-dd HH-mm-ss";
+    format.dateFormat = dateFormatter;
     
     // NSString * -> NSDate *
     NSDate *date = [format dateFromString:dateString];
@@ -47,10 +47,10 @@
  @param date 日期
  @return 转换后的日期字符串
  */
-+ (NSString *)dateToStringWithDate:(NSDate *)date
++ (NSString *)dateToStringWithDate:(NSDate *)date formatter:(NSString *)dateFormatter
 {
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    format.dateFormat = @"yyyy-MM-dd HH-mm-ss";
+    format.dateFormat = dateFormatter;
     
     // NSDate * -> NSString *
     NSString *string = [format stringFromDate:date];
@@ -61,13 +61,13 @@
  比较两个日期的大小
  日期格式为:yyyy-MM-dd HH-mm-ss，可自定义
  */
-+(NSDate *)compareDate:(NSString*)date1 withDate:(NSString*)date2{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
++(NSDate *)compareDate:(NSString*)date1 withDate:(NSString*)date2 formatter:(NSString *)dateFormatter{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:dateFormatter];
     NSDate *dt1 = [[NSDate alloc] init];
     NSDate *dt2 = [[NSDate alloc] init];
-    dt1 = [dateFormatter dateFromString:date1];
-    dt2 = [dateFormatter dateFromString:date2];
+    dt1 = [formatter dateFromString:date1];
+    dt2 = [formatter dateFromString:date2];
     NSComparisonResult result = [dt1 compare:dt2];
     switch (result)
     {
@@ -90,18 +90,18 @@
  @param localDate 本地时间
  @return 转换后的时间字符串
  */
-+ (NSString *)getUTCFormaterWithLocalDate:(NSString *)localDate
++ (NSString *)getUTCFormatterWithLocalDate:(NSString *)localDate localDateFormatter:(NSString *)localFormatter UTCFormatter:(NSString *)UTCFormatter
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //输入格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    //输入格式 @"yyyy-MM-dd HH:mm:ss"
+    [formatter setDateFormat:localFormatter];
     
-    NSDate *dateFormatted = [dateFormatter dateFromString:localDate];
+    NSDate *dateFormatted = [formatter dateFromString:localDate];
     NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
-    [dateFormatter setTimeZone:timeZone];
-    //输出格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
-    NSString *dateString = [dateFormatter stringFromDate:dateFormatted];
+    [formatter setTimeZone:timeZone];
+    //输出格式 @"yyyy-MM-dd'T'HH:mm:ssZ"
+    [formatter setDateFormat:UTCFormatter];
+    NSString *dateString = [formatter stringFromDate:dateFormatted];
     return dateString;
 }
 
@@ -113,17 +113,17 @@
  @param utcDate UTC时间
  @return 转换后的时间字符串
  */
-+ (NSString *)getLocalDateFormaterWithUTCDate:(NSString *)utcDate
++ (NSString *)getLocalDateFormatterWithUTCDate:(NSString *)utcDate UTCFormatter:(NSString *)UTCFormatter localDateFormatter:(NSString *)localFormatter
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //输入格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    //输入格式 @"yyyy-MM-dd'T'HH:mm:ssZ"
+    [dateFormatter setDateFormat:UTCFormatter];
     NSTimeZone *localTimeZone = [NSTimeZone localTimeZone];
     [dateFormatter setTimeZone:localTimeZone];
     
     NSDate *dateFormatted = [dateFormatter dateFromString:utcDate];
-    //输出格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    //输出格式 @"yyyy-MM-dd HH:mm:ss"
+    [dateFormatter setDateFormat:localFormatter];
     NSString *dateString = [dateFormatter stringFromDate:dateFormatted];
     return dateString;
 }
@@ -135,13 +135,14 @@
  @param localDate 本地日期
  @return 转换后的日期字符串
  */
-+ (NSString *)getGMTFormaterWithLocalDate:(NSDate *)localDate
++ (NSString *)getGMTFormaterWithLocalDate:(NSDate *)localDate formatter:(NSString *)dateFormatter
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
-    [dateFormatter setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en"]];
-    [dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss 'GMT'"];
-    NSString *currentDateStr = [dateFormatter stringFromDate:localDate];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    [formatter setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en"]];
+    //@"EEE, dd MMM yyyy HH:mm:ss 'GMT'"
+    [formatter setDateFormat:dateFormatter];
+    NSString *currentDateStr = [formatter stringFromDate:localDate];
     return currentDateStr;
 }
 
@@ -152,14 +153,14 @@
  @param GMTDate GMT日期
  @return 转换后的日期字符串
  */
-+ (NSString *)getLocalDateFormaterWithGMTDate:(NSString *)GMTDate
++ (NSString *)getLocalDateFormaterWithGMTDate:(NSString *)GMTDate localFormatter:(NSString *)localFormatter
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss 'GMT'"];
-    NSDate *localeDate = [dateFormatter dateFromString:GMTDate];
     //这里设置的是东八区
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT+0800"]];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    //@"yyyy-MM-dd HH:mm:ss"
+    [dateFormatter setDateFormat:localFormatter];
+    NSDate *localeDate = [dateFormatter dateFromString:GMTDate];
     NSString *localeTimeStr =[dateFormatter stringFromDate:localeDate];
     return localeTimeStr;
 }
@@ -170,7 +171,7 @@
  @param timeStamp 时间戳
  @return 时间字符串
  */
-+ (NSString *)timeStampTransToTime:(NSString *)timeStamp
++ (NSString *)timeStampTransToTime:(NSString *)timeStamp outputFormatter:(NSString *)outputFormatter
 {
     NSTimeInterval time=[timeStamp doubleValue];//如果不使用本地时区,因为时差问题要加8小时 == 28800 sec
     NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
@@ -178,7 +179,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];//设置本地时区
     //设定时间格式,这里可以设置成自己需要的格式
-    [dateFormatter setDateFormat:@"yy-MM-dd HH-mm-ss"];
+    [dateFormatter setDateFormat:outputFormatter];
     
     NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
     
@@ -191,11 +192,11 @@
  @param time 时间
  @return 时间戳
  */
-+(NSString *)timeTransTotimeStamp:(NSString *)time
++(NSString *)timeTransTotimeStamp:(NSString *)time inputFormatter:(NSString *)inputFormatter
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeZone:[NSTimeZone localTimeZone]]; //设置本地时区
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
+    [dateFormatter setDateFormat:inputFormatter];
     NSDate *date = [dateFormatter dateFromString:time];
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[date timeIntervalSince1970]];//时间戳
     return timeSp;

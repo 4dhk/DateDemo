@@ -15,7 +15,7 @@
 
  @return <#return value description#>
  */
-+ (NSString *)getCurrentDate;
++ (NSString *)getCurrentDateWithFormatter:(NSString *)dateFormatter;
 
 /**
  string转date
@@ -23,7 +23,7 @@
  @param dateString <#dateString description#>
  @return <#return value description#>
  */
-+ (NSDate *)stringToDateWithString:(NSString *)dateString;
++ (NSDate *)stringToDateWithString:(NSString *)dateString formatter:(NSString *)dateFormatter;
 
 
 /**
@@ -32,7 +32,7 @@
  @param date <#date description#>
  @return <#return value description#>
  */
-+ (NSString *)dateToStringWithDate:(NSDate *)date;
++ (NSString *)dateToStringWithDate:(NSDate *)date formatter:(NSString *)dateFormatter;
 
 
 
@@ -43,7 +43,7 @@
  @param date2 <#date2 description#>
  @return <#return value description#>
  */
-+(NSDate *)compareDate:(NSString*)date1 withDate:(NSString*)date2;
++(NSDate *)compareDate:(NSString*)date1 withDate:(NSString*)date2 formatter:(NSString *)dateFormatter;
 
 
 /**
@@ -52,8 +52,7 @@
  @param localDate <#localDate description#>
  @return <#return value description#>
  */
-+ (NSString *)getUTCFormaterWithLocalDate:(NSString *)localDate;
-
++ (NSString *)getUTCFormatterWithLocalDate:(NSString *)localDate localDateFormatter:(NSString *)localFormatter UTCFormatter:(NSString *)UTCFormatter;
 
 /**
  UTC转本地日期
@@ -61,7 +60,7 @@
  @param utcDate <#utcDate description#>
  @return <#return value description#>
  */
-+ (NSString *)getLocalDateFormaterWithUTCDate:(NSString *)utcDate;
++ (NSString *)getLocalDateFormatterWithUTCDate:(NSString *)utcDate UTCFormatter:(NSString *)UTCFormatter localDateFormatter:(NSString *)localFormatter;
 
 
 /**
@@ -70,7 +69,7 @@
  @param localDate 本地日期
  @return 转换后的日期字符串
  */
-+ (NSString *)getGMTFormaterWithLocalDate:(NSDate *)localDate;
++ (NSString *)getGMTFormaterWithLocalDate:(NSDate *)localDate formatter:(NSString *)dateFormatter;
 
 
 /**
@@ -79,8 +78,7 @@
  @param GMTDate GMT日期
  @return 转换后的日期字符串
  */
-+ (NSString *)getLocalDateFormaterWithGMTDate:(NSString *)GMTDate;
-
++ (NSString *)getLocalDateFormaterWithGMTDate:(NSString *)GMTDate localFormatter:(NSString *)localFormatter;
 
 /**
  时间戳转时间
@@ -88,8 +86,7 @@
  @param timeStamp 时间戳
  @return 时间字符串
  */
-+(NSString *)timeStampTransToTime:(NSString *)timeStamp;
-
++ (NSString *)timeStampTransToTime:(NSString *)timeStamp outputFormatter:(NSString *)formatter;
 
 /**
  时间转时间戳
@@ -97,7 +94,7 @@
  @param time 时间
  @return 时间戳
  */
-+(NSString *)timeTransTotimeStamp:(NSString *)time;
++(NSString *)timeTransTotimeStamp:(NSString *)time inputFormatter:(NSString *)inputFormatter;
 
 /**
  判断date是否是今天
